@@ -25,7 +25,8 @@ sudo apt-get install freeglut3-dev
 ```
 
 For windows:
-Download PyOpenGL‑3.1.5‑cp39‑cp39‑win_amd64.whl [PyOpenGL Windows](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl)
+
+Download [PyOpenGL Windows](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl)
 
 And then:
 ```
