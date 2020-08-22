@@ -12,32 +12,29 @@ import sys
 import math
 import random
 
-# Name of the screen
-screenName = 'Ball Collision'
-
 # Size of the screen 
-width = 800
-height = 600
+WIDTH = 800
+HEIGHT = 600
 
-# Number of balls inside the cube, radius and maxvelocity of the balls
-numBalls = 15
-radius = 0.45
-maxVelocity = 0.005
-colorOn = True # Toggle the color of the balls to on/off
+# Number of balls inside the cube, RADIUS and MAX_VELOCITY of the balls
+NUM_BALLS = 15
+RADIUS = 0.45
+MAX_VELOCITY = 0.005
+COLOR_ON = True # Toggle the color of the balls to on/off
 
 # Cube Vertices coordinates and its size
-cubeSize = 2 # Half the size of the cube
+CUBE_SIZE = 2 # Half the size of the cube
 
 
 vertices = (
-    ( cubeSize,-cubeSize,-cubeSize),
-    ( cubeSize, cubeSize,-cubeSize),
-    (-cubeSize, cubeSize,-cubeSize),
-    (-cubeSize,-cubeSize,-cubeSize),
-    ( cubeSize,-cubeSize, cubeSize),
-    ( cubeSize, cubeSize, cubeSize),
-    (-cubeSize,-cubeSize, cubeSize),
-    (-cubeSize, cubeSize, cubeSize)
+    ( CUBE_SIZE,-CUBE_SIZE,-CUBE_SIZE),
+    ( CUBE_SIZE, CUBE_SIZE,-CUBE_SIZE),
+    (-CUBE_SIZE, CUBE_SIZE,-CUBE_SIZE),
+    (-CUBE_SIZE,-CUBE_SIZE,-CUBE_SIZE),
+    ( CUBE_SIZE,-CUBE_SIZE, CUBE_SIZE),
+    ( CUBE_SIZE, CUBE_SIZE, CUBE_SIZE),
+    (-CUBE_SIZE,-CUBE_SIZE, CUBE_SIZE),
+    (-CUBE_SIZE, CUBE_SIZE, CUBE_SIZE)
     )
 
 # Edges of the cube
@@ -70,11 +67,11 @@ class Ball:
     velocity = [] 
     color = [1.0,1.0,1.0,1.0]
     lastCollision = -1
-    def __init__(self, center, velocity, color, radius):        
+    def __init__(self, center, velocity, color, RADIUS):        
         self.center = center
         self.velocity = velocity
         self.color = color
-        self.radius = radius
+        self.RADIUS = RADIUS
     
     def changePosition(self):
         for i in range(3):
@@ -143,7 +140,6 @@ def ballCollision(i, j):
 
 # Function to initialize OpenGL, called after the window is created
 def initializeGl():
-    global width, height
     glClearColor(0.,0.,0.,1.)                               
     glShadeModel(GL_SMOOTH)                                 
     glEnable(GL_DEPTH_TEST)
@@ -157,18 +153,18 @@ def initializeGl():
     glEnable(GL_LIGHT0)
 
 # Function to handle if the screen is resized
-def screenResize(Width, Height):
-    if Height == 0:						# Prevent A Divide By Zero If The Window Is Too Small
-        Height = 1
-    glViewport(0, 0, Width, Height)
+def screenResize(WIDTH, HEIGHT):
+    if HEIGHT == 0:						# Prevent A Divide By Zero If The Window Is Too Small
+        HEIGHT = 1
+    glViewport(0, 0, WIDTH, HEIGHT)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluPerspective(45.0, float(Width)/float(Height), 0.1, 100.0)
+    gluPerspective(45.0, float(WIDTH)/float(HEIGHT), 0.1, 100.0)
     glMatrixMode(GL_MODELVIEW)
 
 # Function to check collisions and update the position of the balls
 def update():
-    global ballList, cubeSize
+    global ballList
     # Update the position of the balls
     for i in range(len(ballList)):
         ballList[i].changePosition()
@@ -178,7 +174,7 @@ def update():
     x = 1
     for i in range(len(ballList)):
         for j in range(len(ballList) - x):
-            if((distPoints(ballList[i].center, ballList[j + x].center)) <= ballList[i].radius + ballList[j+x].radius) and ((ballList[i].getLastCollision() != (j+x)) or (ballList[j+x].getLastCollision() != i)):
+            if((distPoints(ballList[i].center, ballList[j + x].center)) <= ballList[i].RADIUS + ballList[j+x].RADIUS) and ((ballList[i].getLastCollision() != (j+x)) or (ballList[j+x].getLastCollision() != i)):
                 ballCollision(i, j+x)
                 ballList[i].setLastCollision(j+x)
                 ballList[j+x].setLastCollision(i)
@@ -186,13 +182,13 @@ def update():
         
     # Test the collision of the balls with the walls of the cube
     for i in range(len(ballList)):
-        if (ballList[i].center[0] - ballList[i].radius < -cubeSize or ballList[i].center[0] + ballList[i].radius > cubeSize):   # x
+        if (ballList[i].center[0] - ballList[i].RADIUS < -CUBE_SIZE or ballList[i].center[0] + ballList[i].RADIUS > CUBE_SIZE):   # x
             ballList[i].velocity[0] *= -1
             ballList[i].setLastCollision(-1)
-        if (ballList[i].center[1] - ballList[i].radius < -cubeSize or ballList[i].center[1] + ballList[i].radius > cubeSize):   # y
+        if (ballList[i].center[1] - ballList[i].RADIUS < -CUBE_SIZE or ballList[i].center[1] + ballList[i].RADIUS > CUBE_SIZE):   # y
             ballList[i].velocity[1] *= -1
             ballList[i].setLastCollision(-1)
-        if (ballList[i].center[2] - ballList[i].radius < -cubeSize or ballList[i].center[2] + ballList[i].radius > cubeSize):   # z
+        if (ballList[i].center[2] - ballList[i].RADIUS < -CUBE_SIZE or ballList[i].center[2] + ballList[i].RADIUS > CUBE_SIZE):   # z
             ballList[i].velocity[2] *= -1
             ballList[i].setLastCollision(-1)
 
@@ -226,7 +222,7 @@ def display():
         glPushMatrix()
         glMaterialfv(GL_FRONT,GL_DIFFUSE,ballList[i].color)
         glTranslatef(ballList[i].center[0],ballList[i].center[1],ballList[i].center[2])
-        glutSolidSphere(ballList[i].radius, 20, 20)
+        glutSolidSphere(ballList[i].RADIUS, 20, 20)
         glPopMatrix()
 
     # Info about the balls, uncomment each line to show different info about the balls
@@ -244,8 +240,8 @@ def display():
     
     glPushMatrix()
     printText( 1 , 1 , -1 , "K = " + str(round(cineticEnergy, 12)))
-    printText(1, 17, -1, "Balls: " + str(numBalls) + "  Radius: " + str(radius))
-    printText(1, 33, -1, "Size of the Cube: " + str(2*cubeSize))
+    printText(1, 17, -1, "Balls: " + str(NUM_BALLS) + "  RADIUS: " + str(RADIUS))
+    printText(1, 33, -1, "Size of the Cube: " + str(2*CUBE_SIZE))
     glPopMatrix()
 
     glutSwapBuffers()
@@ -253,23 +249,22 @@ def display():
 
 # Function to create the balls in different positions, with different velocities and different collors
 def inicializeBalls():
-    global numBalls
-    centerList = randomCenter(numBalls)
-    for i in range(numBalls):
-        ballList.append(Ball(centerList[i], randomVelocity(), randomColor(), radius))
+
+    centerList = randomCenter(NUM_BALLS)
+    for i in range(NUM_BALLS):
+        ballList.append(Ball(centerList[i], randomVelocity(), randomColor(), RADIUS))
 
 # Function to give the balls the start center position
 # Returns a list of vectors [x,y,z]
-def randomCenter(numBalls):
-    global cubeSize, radius
+def randomCenter(NUM_BALLS):
     vector = []
 
-    qBall = int((cubeSize / radius))
+    qBall = int((CUBE_SIZE / RADIUS))
     qBall3 = qBall ** 3
 
-    if(qBall3 >= numBalls):
+    if(qBall3 >= NUM_BALLS):
 
-        for j in range (numBalls):  # For all the balls
+        for j in range (NUM_BALLS):  # For all the balls
             pos = newPos(qBall)
 
             while (checkBallInside(vector, pos)):
@@ -278,7 +273,7 @@ def randomCenter(numBalls):
             vector.append(pos)
 
     else: 
-        print("ERROR: not possible to fit the balls into the cube. \nTry reducing the quantity of balls, make the balls smaller or increase the cubeSize")
+        print("ERROR: not possible to fit the balls into the cube. \nTry reducing the quantity of balls, make the balls smaller or increase the CUBE_SIZE")
         quit()
     
     return vector
@@ -286,29 +281,28 @@ def randomCenter(numBalls):
 # Function to generate a new position for the list in randomCenter() Function
 # Returns the position [x,y,z]
 def newPos(qBall):
-    global radius
     pos = []
     if (qBall == 2):
         for i in range(3):  # X, Y, Z ( 3 times )
             randomNumber = random.choice( [-1,1] )
-            pos.append(randomNumber * radius)
+            pos.append(randomNumber * RADIUS)
 
     elif not (qBall % 2):    # Even number
         for i in range(3):  # X, Y, Z ( 3 times )
             randomNumber = random.randint( -qBall / 2 , qBall / 2 )
 
             if (randomNumber > 0): 
-                pos.append(randomNumber * 2 * radius - radius)
+                pos.append(randomNumber * 2 * RADIUS - RADIUS)
             elif (randomNumber < 0):
-                pos.append(randomNumber * 2 * radius + radius)
+                pos.append(randomNumber * 2 * RADIUS + RADIUS)
             else:   # randomNumber == 0
                 randomNumber = random.choice( [-1,1] )
-                pos.append(randomNumber * radius)
+                pos.append(randomNumber * RADIUS)
     
     else:                   # Odd number
         for i in range(3):  # X, Y, Z ( 3 times )
             randomNumber = random.randint( int(-qBall / 2) , int(qBall / 2 ))
-            pos.append(randomNumber * 2 *radius)
+            pos.append(randomNumber * 2 *RADIUS)
     
     return pos
 
@@ -327,14 +321,13 @@ def checkBallInside(vector, pos):
 def randomVelocity():
     vector = [] 
     for i in range(3):
-        vector.append( round(random.uniform( -maxVelocity , maxVelocity  ), 4) )
+        vector.append( round(random.uniform( -MAX_VELOCITY , MAX_VELOCITY  ), 4) )
     return vector
 
 # Function to give a ball a random color
 # Returns a color [r,g,b,alfa]
 def randomColor():
-    global colorOn
-    if(colorOn):
+    if(COLOR_ON):
         color = [random.choice( [0.0,1.0] ), random.choice( [0.0,1.0] ), random.choice( [0.0,1.0] ), 1.0]
         while (color[0] == 0.0) and (color[1] == 0.0) and (color[2] == 0.0):
             color = [random.choice( [0.0,1.0] ), random.choice( [0.0,1.0] ), random.choice( [0.0,1.0] ), 1.0]
@@ -346,18 +339,17 @@ def randomColor():
 
 
 def main():
-    global width, height, screenName
     glutInit(sys.argv)
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
 
     # Determine the size of the screen
-    glutInitWindowSize(width, height)
+    glutInitWindowSize(WIDTH, HEIGHT)
 
     # The window starts at the upper left corner of the screen
     glutInitWindowPosition(0, 0)
 
     # Create a window with the name choosen
-    glutCreateWindow(screenName)
+    glutCreateWindow('Ball Collision')
 
     # To register the main display function
     glutDisplayFunc(display)
@@ -378,7 +370,7 @@ def main():
               0,0,0,
               0,1,0)
     #glRotatef(8, 1.0, 1.0, 0.0)
-    glTranslatef(1.0, 0.0, -cubeSize/2)
+    glTranslatef(1.0, 0.0, -CUBE_SIZE/2)
 
     glPushMatrix()
     # Start Event Processing Engine
