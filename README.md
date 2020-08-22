@@ -1,14 +1,16 @@
 # Ball Collision
 
-This project simulates elastic collision between balls inside a closed box conserving the kinetic energy.
+This project simulates a 3D elastic collision between balls inside a closed box conserving the kinetic energy.
+
+![BallCollision](/Videos/BallCollision.png)
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project and it's dependencies. As well as how to run it on your local system.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+You will need to install [Git](https://git-scm.com/downloads)[Python 3](https://www.python.org/downloads/), 
 
 ```
 Give examples
