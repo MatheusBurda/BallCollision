@@ -17,9 +17,9 @@ You will need to install:
 
 For linux:
 ```
+sudo apt install python3-pip (If You don't have pip installed)
+
 pip3 install pyopengl
-[//]: # (If You don't have pip installed:)
-sudo apt install python3-pip
 
 sudo apt-get install freeglut3-dev
 ```
@@ -38,6 +38,7 @@ Clone the repository:
 
 ```
 git clone https://github.com/MatheusBurda/BallCollision.git
+
 cd BallCollision
 ```
 
@@ -73,7 +74,7 @@ To stop the simulation just close the window.
 
 ## Authors
 
-* **Matheus Burda** - *start to end* - [Matheus Burda](https://github.com/MatheusBurda)
+* **[Matheus Burda](https://github.com/MatheusBurda)** - *start to end* 
 
 ## License
 
