@@ -14,8 +14,9 @@ You will need to install:
 
 * [Git](https://git-scm.com/downloads)
 * [Python 3.6+](https://www.python.org/downloads/)
+* PyOpenGL
 
-For linux:
+For Linux:
 ```
 sudo apt install python3-pip (If You don't have pip installed)
 
@@ -24,7 +25,7 @@ pip3 install pyopengl
 sudo apt-get install freeglut3-dev
 ```
 
-For windows:
+For Windows:
 
 Download [PyOpenGL Windows](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl)
 
@@ -39,8 +40,6 @@ Clone the repository:
 
 ```
 git clone https://github.com/MatheusBurda/BallCollision.git
-
-cd BallCollision
 ```
 
 ## Running the tests
@@ -52,9 +51,9 @@ WIDTH = 800
 HEIGHT = 600
 
 # Number of balls inside the cube, RADIUS and MAX_VELOCITY of the balls
-NUM_BALLS = 15
-RADIUS = 0.45
-MAX_VELOCITY = 0.005
+NUM_BALLS = 15 # Number of balls inside the cube
+RADIUS = 0.45 # Radius of each ball
+MAX_VELOCITY = 0.005 # Max velocity of each ball
 COLOR_ON = True # Toggle the color of the balls to on/off
 
 # Cube Vertices coordinates and its size
