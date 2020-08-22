@@ -12,14 +12,11 @@ These instructions will get you a copy of the project and it's dependencies. As 
 
 You will need to install:
 
-<!--ts-->
-   *[Git](https://git-scm.com/downloads)
-   *[Python 3.6+](https://www.python.org/downloads/)
-   *[PyOpenGl 3.1.5]()
-<!--te-->
+* [Git](https://git-scm.com/downloads)
+* [Python 3.6+](https://www.python.org/downloads/)
 
-```
-Give examples
+```As well as PyOpenGl:
+pip install numpy scipy pyopengl
 ```
 
 ### Installing
