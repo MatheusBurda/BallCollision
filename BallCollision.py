@@ -1,8 +1,7 @@
 # This code was created by Matheus A. Burda - April/2020
 # Email: matheusburda@alunos.utfpr.edu.br
 #
-# This code simulates elastic collision between balls inside a closed box
-# conservating the cinetic energy.
+# This code simulates elastic collision between balls inside a closed box conserving the kinetic energy.
 #
 # Made using Python/PyOpenGL
 
