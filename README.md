@@ -2,7 +2,7 @@
 
 This project simulates a 3D elastic collision between balls inside a closed box conserving the kinetic energy.
 
-![BallCollision](/Extras/BallCollisionSample.png)
+![BallCollision](/Videos/BallCollision.gif)
 
 ## Getting Started
 
