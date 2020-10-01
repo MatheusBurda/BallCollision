@@ -12,6 +12,7 @@ import sys
 import math
 import random
 import argparse
+import time
 
 # Size of the screen 
 WIDTH = 800
@@ -242,6 +243,7 @@ def printText( x,  y, z, text):
 # GLUT Display function
 def display():
     global ballList
+    start = time.time()
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
     
     # Update ball position and check collisions
@@ -279,6 +281,7 @@ def display():
     printText( 1 , 1 , -1 , "K = " + str(round(cineticEnergy, 12)))
     printText(1, 17, -1, "Balls: " + str(NUM_BALLS) + "  RADIUS: " + str(RADIUS))
     printText(1, 33, -1, "Size of the Cube: " + str(2*CUBE_SIZE))
+    printText(1, 49, -1, "FPS: {}".format(int(1 / (time.time() - start))))
     glPopMatrix()
 
     glutSwapBuffers()
