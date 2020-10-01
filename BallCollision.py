@@ -11,6 +11,7 @@ from OpenGL.GLUT import *
 import sys
 import math
 import random
+import argparse
 
 # Size of the screen 
 WIDTH = 800
@@ -25,17 +26,6 @@ COLOR_ON = True # Toggle the color of the balls to on/off
 # Cube Vertices coordinates and its size
 CUBE_SIZE = 2 # Half the size of the cube
 
-
-vertices = (
-    ( CUBE_SIZE,-CUBE_SIZE,-CUBE_SIZE),
-    ( CUBE_SIZE, CUBE_SIZE,-CUBE_SIZE),
-    (-CUBE_SIZE, CUBE_SIZE,-CUBE_SIZE),
-    (-CUBE_SIZE,-CUBE_SIZE,-CUBE_SIZE),
-    ( CUBE_SIZE,-CUBE_SIZE, CUBE_SIZE),
-    ( CUBE_SIZE, CUBE_SIZE, CUBE_SIZE),
-    (-CUBE_SIZE,-CUBE_SIZE, CUBE_SIZE),
-    (-CUBE_SIZE, CUBE_SIZE, CUBE_SIZE)
-    )
 
 # Edges of the cube
 edges = (
@@ -53,8 +43,55 @@ edges = (
     (5,7)
     )
 
+def argumentParser():
+    global WIDTH
+    global HEIGHT
+    global NUM_BALLS
+    global RADIUS
+    global MAX_VELOCITY
+    global COLOR_ON
+    global CUBE_SIZE
+
+    parser = argparse.ArgumentParser(description='This program simulates a 3D elastic collision between balls inside a closed cube conserving the kinetic energy.')
+    parser.add_argument('--width', type=int, help='screen width. Defaults to {}'.format(WIDTH))
+    parser.add_argument('--height', type=int, help='screen height. Defaults to {}'.format(HEIGHT))
+
+    parser.add_argument('-n', '--num-balls', type=int, help='amount of balls used in the simulation. Defaults to {}'.format(NUM_BALLS))
+    parser.add_argument('-r', '--radius', type=float, help='radius of balls. Defaults to {}'.format(RADIUS))
+    parser.add_argument('-v', '--max-velocity', type=float, help='max velocity allowed. Defaults to {}'.format(MAX_VELOCITY))
+    parser.add_argument('--no-color', action='store_false', help='toggle colored balls off')
+
+    parser.add_argument('-s', '--size', type=int, help='size of the cube that contains the balls. Defaults to {}'.format(CUBE_SIZE))
+
+    args = parser.parse_args()
+
+    if args.width is not None:
+        WIDTH = args.width
+    if args.height is not None:
+        HEIGHT = args.height
+    if args.num_balls is not None:
+        NUM_BALLS = args.num_balls
+    if args.radius is not None:
+        RADIUS = args.radius
+    if args.max_velocity is not None:
+        MAX_VELOCITY = args.max_velocity
+    if args.no_color is not None:
+        COLOR_ON = args.no_color
+    if args.size is not None:
+        CUBE_SIZE = args.size
+
 # Function to draw the Cube
 def Cube():
+    vertices = (
+        ( CUBE_SIZE,-CUBE_SIZE,-CUBE_SIZE),
+        ( CUBE_SIZE, CUBE_SIZE,-CUBE_SIZE),
+        (-CUBE_SIZE, CUBE_SIZE,-CUBE_SIZE),
+        (-CUBE_SIZE,-CUBE_SIZE,-CUBE_SIZE),
+        ( CUBE_SIZE,-CUBE_SIZE, CUBE_SIZE),
+        ( CUBE_SIZE, CUBE_SIZE, CUBE_SIZE),
+        (-CUBE_SIZE,-CUBE_SIZE, CUBE_SIZE),
+        (-CUBE_SIZE, CUBE_SIZE, CUBE_SIZE)
+        )
     glBegin(GL_LINES)
     for edge in edges:
         for vertex in edge:
@@ -339,6 +376,9 @@ def randomColor():
 
 
 def main():
+
+    argumentParser()
+
     glutInit(sys.argv)
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
 
@@ -377,4 +417,5 @@ def main():
     glutMainLoop()
 
 
-main()
+if __name__ == "__main__":
+    main()
