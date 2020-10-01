@@ -44,6 +44,8 @@ edges = (
     (5,7)
     )
 
+
+# Responsible for altering some aspects of the simulation if the user supplies arguments (which are treated by this very function)
 def argumentParser():
     global WIDTH
     global HEIGHT
