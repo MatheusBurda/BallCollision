@@ -2,7 +2,7 @@
 
 This project simulates a 3D elastic collision between balls inside a closed box conserving the kinetic energy.
 
-![BallCollision](/Extras/BallCollision.gif)
+![BallCollision](/Extras/BallCollision2.gif)
 
 ## Getting Started
 
@@ -44,28 +44,34 @@ git clone https://github.com/MatheusBurda/BallCollision.git
 
 ## Running the tests
 
-On the beggining of the BallCollision.py file you will find multiple defines
-```
-# Size of the screen 
-WIDTH = 800
-HEIGHT = 600
-
-# Number of balls inside the cube, RADIUS and MAX_VELOCITY of the balls
-NUM_BALLS = 15 # Number of balls inside the cube
-RADIUS = 0.45 # Radius of each ball
-MAX_VELOCITY = 0.005 # Max velocity of each ball
-COLOR_ON = True # Toggle the color of the balls to on/off
-
-# Cube Vertices coordinates and its size
-CUBE_SIZE = 2 # Half the size of the cube
-```
-You can change them as you wish, then save the file and run
+Linux:
 ```
 pyhton3 BallCollision.py
 ```
-For windows:
+Windows:
 ```
 py BallCollision.py
+```
+
+Optional arguments:
+```
+usage: BallCollision.py [-h] [--width WIDTH] [--height HEIGHT]
+                        [-n NUM_BALLS] [-r RADIUS] [-v MAX_VELOCITY]
+                        [--no-color] [-s SIZE]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --width WIDTH         screen width. Defaults to 800
+  --height HEIGHT       screen height. Defaults to 600
+  -n NUM_BALLS, --num-balls NUM_BALLS
+                        amount of balls used in the simulation. Defaults to 15
+  -r RADIUS, --radius RADIUS
+                        radius of balls. Defaults to 0.45
+  -v MAX_VELOCITY, --max-velocity MAX_VELOCITY
+                        max velocity allowed. Defaults to 0.005
+  --no-color            toggle colored balls off
+  -s SIZE, --size SIZE  half the size of the cube that contains the
+                        balls. Defaults to 2
 ```
 
 A window should pop up with the simulation.
@@ -75,6 +81,7 @@ To stop the simulation just close the window.
 ## Authors
 
 * **[Matheus Burda](https://github.com/MatheusBurda)** - *start to end* 
+* **[Vinícius Couto](https://github.com/vcoutasso)** - *FPS counter and argument parser* 
 
 ## License
 

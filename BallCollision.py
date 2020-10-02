@@ -28,22 +28,6 @@ COLOR_ON = True # Toggle the color of the balls to on/off
 CUBE_SIZE = 2 # Half the size of the cube
 
 
-# Edges of the cube
-edges = (
-    (0,1),
-    (0,3),
-    (0,4),
-    (2,1),
-    (2,3),
-    (2,7),
-    (6,3),
-    (6,4),
-    (6,7),
-    (5,1),
-    (5,4),
-    (5,7)
-    )
-
 
 # Responsible for altering some aspects of the simulation if the user supplies arguments (which are treated by this very function)
 def argumentParser():
@@ -64,7 +48,7 @@ def argumentParser():
     parser.add_argument('-v', '--max-velocity', type=float, help='max velocity allowed. Defaults to {}'.format(MAX_VELOCITY))
     parser.add_argument('--no-color', action='store_false', help='toggle colored balls off')
 
-    parser.add_argument('-s', '--size', type=int, help='size of the cube that contains the balls. Defaults to {}'.format(CUBE_SIZE))
+    parser.add_argument('-s', '--size', type=int, help='half the size of the cube that contains the balls. Defaults to {}'.format(CUBE_SIZE))
 
     args = parser.parse_args()
 
@@ -94,6 +78,22 @@ def Cube():
         ( CUBE_SIZE, CUBE_SIZE, CUBE_SIZE),
         (-CUBE_SIZE,-CUBE_SIZE, CUBE_SIZE),
         (-CUBE_SIZE, CUBE_SIZE, CUBE_SIZE)
+        )
+
+    # Edges of the cube
+    edges = (
+        (0,1),
+        (0,3),
+        (0,4),
+        (2,1),
+        (2,3),
+        (2,7),
+        (6,3),
+        (6,4),
+        (6,7),
+        (5,1),
+        (5,4),
+        (5,7)
         )
     glBegin(GL_LINES)
     for edge in edges:
@@ -184,9 +184,7 @@ def initializeGl():
     glShadeModel(GL_SMOOTH)                                 
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_LIGHTING)
-    lightZeroPosition = [10.,4.,10.,1.]                     # Position of the light    
-    lightZeroColor = [1.0,1.0,1.0,1.0]                      # White light
-    glLightfv(GL_LIGHT0, GL_POSITION, lightZeroPosition)        
+    lightZeroColor = [1.0,1.0,1.0,1.0]                      # White light      
     glLightfv(GL_LIGHT0, GL_DIFFUSE, lightZeroColor)        
     glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.1)       
     glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.05)
@@ -253,8 +251,9 @@ def display():
 
     # Draw the Cube
     glPushMatrix()
-    color = [1.0,1.,1.,1.]
-    glMaterialfv(GL_FRONT,GL_DIFFUSE,color)
+    color = [1.0,1.0,1.0,1.0]
+    glMaterialfv(GL_FRONT,GL_AMBIENT,color)
+    glMaterialfv(GL_FRONT,GL_EMISSION,[0.0, 0.0, 0.0, 0.0])
     Cube()
     glPopMatrix()   
 
@@ -262,6 +261,7 @@ def display():
     for i in range(len(ballList)):
         glPushMatrix()
         glMaterialfv(GL_FRONT,GL_DIFFUSE,ballList[i].color)
+        glMaterialfv(GL_FRONT,GL_AMBIENT,[0.0, 0.0, 0.0, 0.0])
         glTranslatef(ballList[i].center[0],ballList[i].center[1],ballList[i].center[2])
         glutSolidSphere(ballList[i].RADIUS, 20, 20)
         glPopMatrix()
@@ -275,12 +275,12 @@ def display():
         #printText( 1 , (i+3)*16 , -1 ,  "Center " + str(i) + " = " + str(ballList[i].center)) # Shows the center position of each ball
     glPopMatrix() """
 
-    cineticEnergy = 0.00
+    kineticEnergy = 0.00
     for i in range(len(ballList)):
-        cineticEnergy += float((sizeVector(ballList[i].velocity) ** 2) / 2.0)
+        kineticEnergy += float((sizeVector(ballList[i].velocity) ** 2) / 2.0)
     
     glPushMatrix()
-    printText( 1 , 1 , -1 , "K = " + str(round(cineticEnergy, 12)))
+    printText( 1 , 1 , -1 , "K = " + str(round(kineticEnergy, 12)))
     printText(1, 17, -1, "Balls: " + str(NUM_BALLS) + "  RADIUS: " + str(RADIUS))
     printText(1, 33, -1, "Size of the Cube: " + str(2*CUBE_SIZE))
     printText(1, 49, -1, "FPS: {}".format(int(1 / (time.time() - start))))
@@ -315,7 +315,7 @@ def randomCenter(NUM_BALLS):
             vector.append(pos)
 
     else: 
-        print("ERROR: not possible to fit the balls into the cube. \nTry reducing the quantity of balls, make the balls smaller or increase the CUBE_SIZE")
+        print("ERROR: not possible to fit the balls into the cube. \nTry reducing the quantity of balls, make the balls smaller or increase the Cube Size")
         quit()
     
     return vector
@@ -410,12 +410,11 @@ def main():
 
     # Initialize the window.
     initializeGl()
-
-    gluLookAt(0,0,10,
+    
+    # Position and view angle
+    gluLookAt(0,0,4*CUBE_SIZE,
               0,0,0,
               0,1,0)
-    #glRotatef(8, 1.0, 1.0, 0.0)
-    glTranslatef(1.0, 0.0, -CUBE_SIZE/2)
 
     glPushMatrix()
     # Start Event Processing Engine
