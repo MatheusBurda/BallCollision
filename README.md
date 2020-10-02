@@ -70,7 +70,7 @@ optional arguments:
   -v MAX_VELOCITY, --max-velocity MAX_VELOCITY
                         max velocity allowed. Defaults to 0.005
   --no-color            toggle colored balls off
-  -s SIZE, --size SIZE  size of the cube that contains the balls. Defaults to 2
+  -s SIZE, --size SIZE  size of the cube that contains the balls. Defaults to 4
 ```
 
 A window should pop up with the simulation.
