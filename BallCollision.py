@@ -48,7 +48,7 @@ def argumentParser():
     parser.add_argument('-v', '--max-velocity', type=float, help='max velocity allowed. Defaults to {}'.format(MAX_VELOCITY))
     parser.add_argument('--no-color', action='store_false', help='toggle colored balls off')
 
-    parser.add_argument('-s', '--size', type=int, help='half the size of the cube that contains the balls. Defaults to {}'.format(CUBE_SIZE))
+    parser.add_argument('-s', '--size', type=int, help='size of the cube that contains the balls. Defaults to {}'.format(CUBE_SIZE*2))
 
     args = parser.parse_args()
 
@@ -65,7 +65,7 @@ def argumentParser():
     if args.no_color is not None:
         COLOR_ON = args.no_color
     if args.size is not None:
-        CUBE_SIZE = args.size
+        CUBE_SIZE = args.size/2
 
 # Function to draw the Cube
 def Cube():
@@ -197,7 +197,7 @@ def screenResize(WIDTH, HEIGHT):
     glViewport(0, 0, WIDTH, HEIGHT)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluPerspective(45.0, float(WIDTH)/float(HEIGHT), 0.1, 100.0)
+    gluPerspective(45.0, float(WIDTH)/float(HEIGHT), 0.1, 6*CUBE_SIZE)
     glMatrixMode(GL_MODELVIEW)
 
 # Function to check collisions and update the position of the balls
