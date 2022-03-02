@@ -16,7 +16,7 @@ You will need to install:
 * [Python 3.6+](https://www.python.org/downloads/)
 * PyOpenGL
 
-For Linux:
+On Linux:
 ```
 sudo apt install python3-pip (If You don't have pip installed)
 
@@ -25,7 +25,7 @@ pip3 install pyopengl
 sudo apt-get install freeglut3-dev
 ```
 
-For Windows:
+On Windows:
 
 Download [PyOpenGL Windows](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl)
 
